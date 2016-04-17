@@ -3,13 +3,12 @@
 bool pn544_validate_boot_mode(void) {
     enum lge_boot_mode_type boot_mode;
     boot_mode = lge_get_boot_mode();
-    printk("pn544_probe() boot_mode : %d\n",boot_mode);
-    if (boot_mode == LGE_BOOT_MODE_FACTORY || boot_mode == LGE_BOOT_MODE_FACTORY2)
-    {
-        printk("boot_mode == LGE_BOOT_MODE_FACTORY || boot_mode == LGE_BOOT_MODE_FACTORY2\n");
-        return true;
+	printk("pn544_probe() boot_mode : %d\n",boot_mode);
+    if (boot_mode == LGE_BOOT_MODE_NORMAL) {
+        printk("boot_mode :LGE_BOOT_MODE_NORMAL\n");
+        return false;
     }
-    return false;
+    return true;
 }
 
 int pn544_get_hw_revision(void)
