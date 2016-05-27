@@ -738,8 +738,6 @@ static int qpnp_mpp_set(struct qpnp_led_data *led)
 	u8 val;
 	int duty_us, duty_ns, period_us;
 
-	printk("%s() mode:%d, blinking:%d\n",
-			__func__, led->mpp_cfg->pwm_mode, led->mpp_cfg->pwm_cfg->blinking);
 	if (led->cdev.brightness) {
 		if (led->cdev.brightness < led->mpp_cfg->min_brightness) {
 			dev_warn(&led->spmi_dev->dev,
