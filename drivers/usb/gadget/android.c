@@ -3326,12 +3326,12 @@ static int android_bind(struct usb_composite_dev *cdev)
 	boot_mode = lge_get_boot_mode();
 
 	switch(boot_mode){
-		case LGE_BOOT_MODE_QEM_56K:
-		case LGE_BOOT_MODE_QEM_130K:
-		case LGE_BOOT_MODE_QEM_910K:
-		case LGE_BOOT_MODE_PIF_56K:
-		case LGE_BOOT_MODE_PIF_130K:
-		case LGE_BOOT_MODE_PIF_910K:
+		case LGE_BOOT_MODE_FACTORY2:
+		case LGE_BOOT_MODE_FACTORY:
+		case LGE_BOOT_MODE_FACTORY3:
+		case LGE_BOOT_MODE_PIFBOOT2:
+		case LGE_BOOT_MODE_PIFBOOT:
+		case LGE_BOOT_MODE_PIFBOOT3:
 			pr_info("%s : pif cable is plugged, bind factory composition\n",__func__);
 			dev->check_pif = true;
 			android_lge_factory_bind(cdev);
