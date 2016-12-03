@@ -356,6 +356,13 @@
 			status = "okay";
 		};
 	};
+        rpm-regulator-ldoa19 {
+                status = "okay";
+                pm8226_l19: regulator-l19 {
+                        regulator-always-on;
+                        status = "okay";
+                };
+        };
 	rpm-regulator-ldoa26 {
 		status = "okay";
 		pm8226_l26: regulator-l26 {
@@ -370,4 +377,11 @@
 			status = "okay";
 		};
 	};
+        rpm-regulator-vsa1 {
+                status = "okay";
+                pm8226_lvs1: regulator-lvs1 {
+                        regulator-always-on;
+                        status = "okay";
+                };
+};
 };
