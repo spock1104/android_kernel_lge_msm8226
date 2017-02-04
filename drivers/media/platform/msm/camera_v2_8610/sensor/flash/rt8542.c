@@ -693,7 +693,7 @@ static int rt8542_probe(struct i2c_client *i2c_dev,
 
 	/* To reduce current consumption during booting,
 	  decrease the backlight level to boot well. */
-	if (lge_get_boot_mode() >= LGE_BOOT_MODE_QEM_56K)
+	if (lge_get_boot_mode() >= LGE_BOOT_MODE_FACTORY2)
 		dev->default_brightness = dev->factory_brightness;
 	
 	rt8542_backlight_on(dev->default_brightness);

@@ -1401,12 +1401,12 @@ static bool lp5521_start_pattern_disable_condition(void)
 
 	boot_mode = lge_get_boot_mode();
 	switch(boot_mode){
-		case LGE_BOOT_MODE_QEM_56K:
-		case LGE_BOOT_MODE_QEM_130K:
-		case LGE_BOOT_MODE_QEM_910K:
-		case LGE_BOOT_MODE_PIF_56K:
-		case LGE_BOOT_MODE_PIF_130K:
-		case LGE_BOOT_MODE_PIF_910K:
+		case LGE_BOOT_MODE_FACTORY:
+		case LGE_BOOT_MODE_FACTORY2:
+		case LGE_BOOT_MODE_FACTORY3:
+		case LGE_BOOT_MODE_PIFBOOT:
+		case LGE_BOOT_MODE_PIFBOOT2:
+		case LGE_BOOT_MODE_PIFBOOT3:
 			boot_mode_check = TRUE;
 			break;
 		default:

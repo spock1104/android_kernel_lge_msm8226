@@ -1310,7 +1310,7 @@ void mdss_fb_set_backlight(struct msm_fb_data_type *mfd, u32 bkl_lvl)
 	bool is_bl_changed = (bkl_lvl != mfd->bl_level);
 
 #ifdef CONFIG_MACH_LGE
-  if (force_set_bl_f || lge_get_boot_mode() == LGE_BOOT_MODE_QEM_130K
+  if (force_set_bl_f || lge_get_boot_mode() == LGE_BOOT_MODE_FACTORY
   /* lge_get_laf_mode() || lge_get_boot_mode() == LGE_BOOT_MODE_CHARGERLOGO */) {
     pdata = dev_get_platdata(&mfd->pdev->dev);
     if ((pdata) && (pdata->set_backlight)) {
