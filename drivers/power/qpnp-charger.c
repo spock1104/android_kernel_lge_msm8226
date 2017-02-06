@@ -8491,9 +8491,9 @@ qpnp_charger_probe(struct spmi_device *spmi)
 #ifdef CONFIG_LGE_PM_WORKAROUND_PORT_OPEN_FAIL_IN_FACTORY_TEST
 		boot_mode = lge_get_boot_mode();
 		printk("[qpnp-charger OVD] start qpnp_chg_masked_write boot_mode = %d\n", boot_mode);
-		if ((boot_mode == LGE_BOOT_MODE_QEM_56K) ||
-			(boot_mode == LGE_BOOT_MODE_QEM_130K) ||
-			(boot_mode == LGE_BOOT_MODE_QEM_910K)) {
+		if ((boot_mode == LGE_BOOT_MODE_FACTORY2) ||
+			(boot_mode == LGE_BOOT_MODE_FACTORY) ||
+			(boot_mode == LGE_BOOT_MODE_FACTORY3)) {
 			rc = qpnp_chg_masked_write(chip,
 					chip->usb_chgpth_base + USB_OVP_CTL,
 					0x30, 0x30, 1);

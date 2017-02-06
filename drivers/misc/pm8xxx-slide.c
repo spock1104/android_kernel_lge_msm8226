@@ -108,7 +108,7 @@ bool slide_boot_mode(void)
 {
 	enum lge_boot_mode_type boot_mode;
 	boot_mode = lge_get_boot_mode();
-	if (boot_mode == LGE_BOOT_MODE_QEM_56K || boot_mode == LGE_BOOT_MODE_QEM_130K)
+	if (boot_mode == LGE_BOOT_MODE_FACTORY2 || boot_mode == LGE_BOOT_MODE_FACTORY)
 	{
 		printk("[Slide] boot_mode == 56K || 130K\n");
 		return 1;

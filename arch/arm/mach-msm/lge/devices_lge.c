@@ -591,39 +591,29 @@ static int __init lge_uart_mode(char *uart_mode)
 }
 __setup("uart_console=", lge_uart_mode);
 
-#ifdef CONFIG_LGE_PM_CHARGING_CHARGERLOGO
-int lge_boot_mode_for_touch = (int)LGE_BOOT_MODE_NORMAL;
-#endif
 
 static enum lge_boot_mode_type lge_boot_mode = LGE_BOOT_MODE_NORMAL;
 int __init lge_boot_mode_init(char *s)
 {
 	if (!strcmp(s, "charger"))
 		lge_boot_mode = LGE_BOOT_MODE_CHARGER;
-#ifdef CONFIG_LGE_PM_CHARGING_CHARGERLOGO
-	else if(!strcmp(s, "chargerlogo"))
+	else if (!strcmp(s, "chargerlogo"))
 		lge_boot_mode = LGE_BOOT_MODE_CHARGERLOGO;
-#endif
-	else if (!strcmp(s, "qem_56k"))
-		lge_boot_mode = LGE_BOOT_MODE_QEM_56K;
-	else if (!strcmp(s, "qem_130k"))
-		lge_boot_mode = LGE_BOOT_MODE_QEM_130K;
+	else if (!strcmp(s, "qem_130k") || !strcmp(s, "factory"))
+		lge_boot_mode = LGE_BOOT_MODE_FACTORY;
+	else if (!strcmp(s, "qem_56k") || !strcmp(s, "factory2"))
+		lge_boot_mode = LGE_BOOT_MODE_FACTORY2;
 	else if (!strcmp(s, "qem_910k"))
-		lge_boot_mode = LGE_BOOT_MODE_QEM_910K;
-	else if (!strcmp(s, "pif_56k"))
-		lge_boot_mode = LGE_BOOT_MODE_PIF_56K;
-	else if (!strcmp(s, "pif_130k"))
-		lge_boot_mode = LGE_BOOT_MODE_PIF_130K;
+		lge_boot_mode = LGE_BOOT_MODE_FACTORY3;
+	else if (!strcmp(s, "pif_130k") || !strcmp(s, "pifboot"))
+		lge_boot_mode = LGE_BOOT_MODE_PIFBOOT;
+	else if (!strcmp(s, "pif_56k") || !strcmp(s, "pifboot2"))
+		lge_boot_mode = LGE_BOOT_MODE_PIFBOOT2;
 	else if (!strcmp(s, "pif_910k"))
-		lge_boot_mode = LGE_BOOT_MODE_PIF_910K;
-	else
-		lge_boot_mode = LGE_BOOT_MODE_NORMAL;
-
-#ifdef CONFIG_LGE_PM_CHARGING_CHARGERLOGO
-        lge_boot_mode_for_touch = (int)lge_boot_mode;
-#endif
-
+		lge_boot_mode = LGE_BOOT_MODE_PIFBOOT3;
 	printk("ANDROID BOOT MODE : %d %s\n", lge_boot_mode, s);
+	/* LGE_UPDATE_E for MINIOS2.0 */
+
 	return 1;
 }
 
@@ -636,26 +626,27 @@ enum lge_boot_mode_type lge_get_boot_mode(void)
 
 int lge_get_factory_boot(void)
 {
-    int res;
+	int res;
 
-    /*   if boot mode is factory,
-     *   cable must be factory cable.
-     */
-    switch (lge_boot_mode) {
-        case LGE_BOOT_MODE_QEM_56K:
-        case LGE_BOOT_MODE_QEM_130K:
-        case LGE_BOOT_MODE_QEM_910K:
-        case LGE_BOOT_MODE_PIF_56K:
-        case LGE_BOOT_MODE_PIF_130K:
-        case LGE_BOOT_MODE_PIF_910K:
-            res = 1;
-            break;
-        default:
-            res = 0;
-            break;
-    }
-    return res;
+	/*   if boot mode is factory,
+	 *   cable must be factory cable.
+	 */
+	switch (lge_boot_mode) {
+	case LGE_BOOT_MODE_FACTORY:
+	case LGE_BOOT_MODE_FACTORY2:
+	case LGE_BOOT_MODE_FACTORY3:
+	case LGE_BOOT_MODE_PIFBOOT:
+	case LGE_BOOT_MODE_PIFBOOT2:
+	case LGE_BOOT_MODE_PIFBOOT3:
+		res = 1;
+		break;
+	default:
+		res = 0;
+		break;
+	}
+	return res;
 }
+
 
 static enum lge_boot_cable_type lge_boot_cable = LGE_BOOT_NO_INIT_CABLE;
 int __init lge_boot_cable_type_init(char *s)
@@ -764,41 +755,26 @@ __setup("lge.kcal=", display_kcal_setup);
 #ifdef CONFIG_USB_G_LGE_ANDROID
 static int get_factory_cable(void)
 {
-    /* It is factory cable */
-    switch(lge_pm_get_cable_type()) {
-        case CABLE_56K:
-            return LGEUSB_FACTORY_56K;
+	int res;
 
-        case CABLE_130K:
-            return LGEUSB_FACTORY_130K;
-
-        case CABLE_910K:
-            return LGEUSB_FACTORY_910K;
-
-        default:
-            break;
-    }
-
-    /* if boot mode is factory, cable must be factory cable. */
-    switch (lge_get_boot_mode()) {
-        case LGE_BOOT_MODE_QEM_56K:
-        case LGE_BOOT_MODE_PIF_56K:
-            return LGEUSB_FACTORY_56K;
-
-        case LGE_BOOT_MODE_QEM_130K:
-        case LGE_BOOT_MODE_PIF_130K:
-            return LGEUSB_FACTORY_130K;
-
-        case LGE_BOOT_MODE_QEM_910K:
-        case LGE_BOOT_MODE_PIF_910K:
-            return LGEUSB_FACTORY_910K;
-
-        default:
-            break;
-    }
-
-    /* It is normal cable */
-    return LGEUSB_NORMAL;
+	switch (lge_boot_mode) {
+	case LGE_BOOT_MODE_FACTORY:
+	case LGE_BOOT_MODE_PIFBOOT:
+		res = LGEUSB_FACTORY_130K;
+		break;
+	case LGE_BOOT_MODE_FACTORY2:
+	case LGE_BOOT_MODE_PIFBOOT2:
+		res = LGEUSB_FACTORY_56K;
+		break;
+	case LGE_BOOT_MODE_FACTORY3:
+	case LGE_BOOT_MODE_PIFBOOT3:
+		res = LGEUSB_FACTORY_910K;
+		break;
+	default:
+		res = 0;
+		break;
+	}
+	return res;
 }
 
 struct lge_android_usb_platform_data lge_android_usb_pdata = {

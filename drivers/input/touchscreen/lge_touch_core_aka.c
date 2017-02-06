@@ -2163,7 +2163,7 @@ static ssize_t show_upgrade(struct i2c_client *client, char *buf)
 	int ret = 0;
 	int len = 0;
 
-	if (lge_get_boot_mode() == LGE_BOOT_MODE_QEM_56K) {
+	if (lge_get_boot_mode() == LGE_BOOT_MODE_FACTORY2) {
 		mfts_mode = 1;
 		TOUCH_DEBUG(DEBUG_BASE_INFO, "FW upgrade in Factory Mode\n");
 	}
@@ -3409,10 +3409,10 @@ int touch_driver_register(struct touch_device_driver *driver,
 	int ret = 0;
 	TOUCH_TRACE();
 
-	if(lge_get_boot_mode()==LGE_BOOT_MODE_QEM_130K) {
+	if(lge_get_boot_mode()==LGE_BOOT_MODE_FACTORY) {
 		TOUCH_DEBUG(DEBUG_BASE_INFO, "%s : No touch panel\n",__func__);
 		return 0;
-	} else if ((lge_get_boot_mode()==LGE_BOOT_MODE_QEM_56K) || (lge_get_boot_mode()==LGE_BOOT_MODE_QEM_910K)) {
+	} else if ((lge_get_boot_mode()==LGE_BOOT_MODE_FACTORY2) || (lge_get_boot_mode()==LGE_BOOT_MODE_FACTORY3)) {
 		TOUCH_DEBUG(DEBUG_BASE_INFO, "%s : FACTORY MODE\n",__func__);
 		factory_mode = 1;
 	}

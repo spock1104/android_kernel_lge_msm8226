@@ -1249,9 +1249,9 @@ static int read_soc_params_raw(struct qpnp_bms_chip *chip,
 		boot_mode = lge_get_boot_mode();
 		printk("[qpnp-bms PON_OCV] PON_OVC_UV = %d, cc = %llx, boot_mode = %d\n",
 				chip->last_ocv_uv, raw->cc, boot_mode);
-		if ((boot_mode == LGE_BOOT_MODE_QEM_56K) ||
-			(boot_mode == LGE_BOOT_MODE_QEM_130K) ||
-			(boot_mode == LGE_BOOT_MODE_QEM_910K)) {
+		if ((boot_mode == LGE_BOOT_MODE_FACTORY2) ||
+			(boot_mode == LGE_BOOT_MODE_FACTORY) ||
+			(boot_mode == LGE_BOOT_MODE_FACTORY3)) {
 			is_factory_cable = 1;
 		}
 #endif

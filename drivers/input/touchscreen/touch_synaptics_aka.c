@@ -2842,7 +2842,7 @@ enum error_type synaptics_ts_init(struct i2c_client *client)
 		}
 	}
 
-	/*if (lge_get_boot_mode() == LGE_BOOT_MODE_QEM_56K) {
+	/*if (lge_get_boot_mode() == LGE_BOOT_MODE_FACTORY2) {
 		TOUCH_INFO_MSG("mini_os_finger_amplitude = 0x%02X\n", ts->pdata->role->mini_os_finger_amplitude);
 		buf_array[0] = ts->pdata->role->mini_os_finger_amplitude;
 		buf_array[1] = ts->pdata->role->mini_os_finger_amplitude;
